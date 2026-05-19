@@ -1,14 +1,15 @@
 FROM node:20-alpine
 
+WORKDIR /app
+
+# Установка шрифта DejaVu для поддержки кириллицы в PDF
 RUN apk add --no-cache ttf-dejavu && \
     mkdir -p /app/fonts && \
     cp /usr/share/fonts/ttf-dejavu/DejaVuSans.ttf /app/fonts/ && \
     cp /usr/share/fonts/ttf-dejavu/DejaVuSans-Bold.ttf /app/fonts/
 
-WORKDIR /app
-
 COPY package.json .
-RUN npm install --omit=dev --no-audit --no-fund --prefer-offline
+RUN npm install --omit=dev --no-audit --no-fund
 
 COPY . .
 

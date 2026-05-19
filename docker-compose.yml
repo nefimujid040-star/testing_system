@@ -15,24 +15,18 @@ services:
       timeout: 5s
       retries: 10
 
-  backend:
-    build: ./backend
+  app:
+    build: .
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://postgres:${DB_PASSWORD:-postgres123}@db:5432/testing_system
       JWT_SECRET: ${JWT_SECRET:-change-this-secret-in-production}
       PORT: 3001
-    depends_on:
-      db:
-        condition: service_healthy
-
-  frontend:
-    build: ./frontend
-    restart: unless-stopped
     ports:
       - "${APP_PORT:-80}:80"
     depends_on:
-      - backend
+      db:
+        condition: service_healthy
 
 volumes:
   pgdata:
