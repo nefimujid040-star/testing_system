@@ -2,10 +2,10 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache ttf-dejavu && \
+RUN apk add --no-cache font-dejavu && \
     mkdir -p /app/fonts && \
-    cp /usr/share/fonts/ttf-dejavu/DejaVuSans.ttf /app/fonts/ && \
-    cp /usr/share/fonts/ttf-dejavu/DejaVuSans-Bold.ttf /app/fonts/
+    find /usr/share/fonts -name "DejaVuSans.ttf"      -exec cp {} /app/fonts/ \; && \
+    find /usr/share/fonts -name "DejaVuSans-Bold.ttf" -exec cp {} /app/fonts/ \;
 
 COPY backend/package.json .
 RUN npm install --omit=dev --no-audit --no-fund
