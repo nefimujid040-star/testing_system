@@ -3,6 +3,10 @@ set -e
 
 DB_NAME="testing_system"
 
+# Директория для lock-файла PostgreSQL
+mkdir -p /run/postgresql
+chown postgres:postgres /run/postgresql
+
 # Инициализация PostgreSQL при первом запуске
 if [ ! -f "$PGDATA/PG_VERSION" ]; then
     echo "[init] Initializing PostgreSQL..."
